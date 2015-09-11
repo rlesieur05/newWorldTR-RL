@@ -2,9 +2,9 @@
   
   Tâches à faire (Robin) :
   - Faire fonctionner l'environnement github (FAIT)
-  - Création de la classe "generationpdf".
-  - Faire les procédure de la classe "generationpdf" pour générer un pdf.
-  -
+  - Création de la classe "generationpdf". (FAIT)
+  - Connecter le logiciel à la base de données
+  - 
   -
   -
   -
@@ -12,8 +12,8 @@
   
   Tâches à faire (Thomas) :
   - Créer une table intermédiaire entre localite et point de vente (BDD) (FAIT)
-  - Création d'un script de jeu d'essai 
-  -
+  - Création d'un script de jeu d'essai (FAIT)
+  - Faire les procédure de la classe "generationpdf" pour générer un pdf.
   -
   -
   -
