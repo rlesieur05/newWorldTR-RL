@@ -20,3 +20,11 @@
   -
   -
   
+<?php
+	$host = 'localhost';
+	$user = 'troux';
+	$mdp = 'PscX57Q16';
+	$base = 'dbtrouxNewWorld';
+	//connexion
+	$maBase = mysqli_connect($host, $user, $mdp, $base);
+?>
