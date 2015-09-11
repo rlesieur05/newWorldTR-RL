@@ -1,3 +1,8 @@
+/**
+ * @author Robin Lesieur
+ * @date 11/08/2015
+ */
+
 #ifndef GENERATIONPDF_H
 #define GENERATIONPDF_H
 
@@ -6,13 +11,12 @@ class generationpdf
 
     public:
 
-        generationpdf();
-        ecrireTexte();
-        chargerImage();
-        fermer();
+       generationpdf();
+       void ecrireTexte();
+       void chargerImage();
+       void fermer();
 
     private:
-        PDF::PDF(){};
 };
 
 #endif // GENERATIONPDF_H

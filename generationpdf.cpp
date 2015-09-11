@@ -1,3 +1,10 @@
+/**
+ * @author Robin Lesieur
+ * @date 11/08/2015
+ *
+ */
+
+
 #include "generationpdf.h"
 
 generationpdf::generationpdf()
@@ -5,17 +12,17 @@ generationpdf::generationpdf()
 
 }
 
-generationpdf::ecrireTexte()
+void generationpdf::ecrireTexte()
 {
 
 }
 
-generationpdf::chargerImage()
+void generationpdf::chargerImage()
 {
 
 }
 
-generationpdf::fermer()
+void generationpdf::fermer()
 {
 
 }

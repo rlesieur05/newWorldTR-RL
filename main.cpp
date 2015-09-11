@@ -6,3 +6,14 @@
  *
  **/
 
+#include <QSqlRecord>
+#include <QTextCodec>
+#include <QDebug>
+#include <QSqlQuery>
+#include <iostream>
+#include "connexion.h"
+
+int main ()
+{
+    connexion maConnexion();
+}
