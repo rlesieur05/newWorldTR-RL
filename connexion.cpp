@@ -14,17 +14,17 @@ connexion::connexion()
 
     maBase=new QSqlDatabase(db);
 
-            maBase->setHostName("172.16.63.111");
-            maBase->setDatabaseName("dbtrouxNewWorld");
-            maBase->setUserName("troux");
-            maBase->setPassword("PscX57Q16");
-            bool ok = maBase->open();
-            if(!ok)
-            {
-                cout<<"Connection impossible"<<endl;
-            }
-            else
-            {
-                cout<<"Connection réussie"<<endl;
-            }
+    maBase->setHostName("localhost");
+    maBase->setDatabaseName("nw");
+    maBase->setUserName("troux");
+    maBase->setPassword("tyk2irty");
+    bool ok = maBase->open();
+    if(!ok)
+    {
+        cout<<"Connection impossible"<<endl;
+    }
+    else
+    {
+        cout<<"Connection réussie"<<endl;
+    }
 }

@@ -15,6 +15,5 @@
 
 int main ()
 {
-    std::cout<<"test2"<<std::endl;
     connexion maConnexion;
 }
