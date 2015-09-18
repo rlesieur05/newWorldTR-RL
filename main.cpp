@@ -18,6 +18,13 @@ int main ()
     connexion maConnexion;
 }
 
+#include <QApplication>
+#include <QSqlDatabase>
+#include <iostream>
+#include <QtGui/QPrinter>
+#include <QtGui/QPainter>
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
