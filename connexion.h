@@ -5,10 +5,10 @@
 #include <QSqlTableModel>
 #include <QObject>
 
-class connexion
+class Connexion
 {
 public:
-    connexion();
+    Connexion();
 
 private :
  QSqlDatabase * maBase;

@@ -7,9 +7,8 @@
 
 using namespace std;
 
-connexion::connexion()
+Connexion::Connexion()
 {
-
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL");
 
     maBase=new QSqlDatabase(db);
