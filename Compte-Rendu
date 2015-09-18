@@ -14,7 +14,7 @@
   - Créer une table intermédiaire entre localite et point de vente (BDD) (FAIT)
   - Création d'un script de jeu d'essai (FAIT)
   - Faire les procédure de la classe "generationpdf" pour générer un pdf. (FAIT)
-  -
+  - Faire les requêtes SQL dans le Qt
   -
   -
   -
