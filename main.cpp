@@ -12,17 +12,32 @@
 #include <QSqlQuery>
 #include <QApplication>
 #include <QSqlDatabase>
-#include <iostream>
 #include <QtGui/QPrinter>
 #include <QtGui/QPainter>
 #include <QVector>
-#include "connexion.h"
+#include <iostream>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-    Connexion maCo;
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL");
+
+    QSqlDatabase * maBase=new QSqlDatabase(db);
+
+    maBase->setHostName("172.16.63.111");
+    maBase->setDatabaseName("dbtrouxNewWorld");
+    maBase->setUserName("troux");
+    maBase->setPassword("PscX57Q16");
+    bool ok = maBase->open();
+    if(!ok)
+    {
+        cout<<"Connection impossible"<<endl;
+    }
+    else
+    {
+        cout<<"Connection réussie"<<endl;
+    }
 
 
 

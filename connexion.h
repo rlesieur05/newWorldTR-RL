@@ -9,7 +9,7 @@ class Connexion
 {
 public:
     Connexion();
-    QVector<QString> getRequest(QString stringRequest);
+    QVector<QString> getRequest(QString stringRequest, QString tabType);
 
 private :
  QSqlDatabase * maBase;

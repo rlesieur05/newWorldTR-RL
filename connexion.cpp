@@ -28,10 +28,9 @@ Connexion::Connexion()
     }
 }
 
-QVector<QString> Connexion::getRequest(QString stringRequest)
+QVector<QString> Connexion::getRequest(QString stringRequest, QString tabType)
 {
     QSqlQuery req;
     req.exec(stringRequest);
-
-    cout<<req.size();
+    int nbColonne = tabType.length();
 }
