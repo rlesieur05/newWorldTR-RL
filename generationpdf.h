@@ -10,7 +10,6 @@ class generationpdf
 {
 
     public:
-
        generationpdf();
        void ecrireTexte();
        void chargerImage();
