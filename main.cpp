@@ -15,6 +15,7 @@
 #include <iostream>
 #include <QtGui/QPrinter>
 #include <QtGui/QPainter>
+#include <QVector>
 #include "connexion.h"
 
 using namespace std;

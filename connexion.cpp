@@ -27,3 +27,11 @@ Connexion::Connexion()
         cout<<"Connection réussie"<<endl;
     }
 }
+
+QVector<QString> Connexion::getRequest(QString stringRequest)
+{
+    QSqlQuery req;
+    req.exec(stringRequest);
+
+    cout<<req.size();
+}

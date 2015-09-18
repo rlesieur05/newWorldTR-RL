@@ -9,6 +9,7 @@ class Connexion
 {
 public:
     Connexion();
+    QVector<QString> getRequest(QString stringRequest);
 
 private :
  QSqlDatabase * maBase;
