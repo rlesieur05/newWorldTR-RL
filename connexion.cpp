@@ -14,10 +14,10 @@ connexion::connexion()
 
     maBase=new QSqlDatabase(db);
 
-    maBase->setHostName("localhost");
-    maBase->setDatabaseName("nw");
+    maBase->setHostName("172.16.63.111");
+    maBase->setDatabaseName("dbtrouxNewWorld");
     maBase->setUserName("troux");
-    maBase->setPassword("tyk2irty");
+    maBase->setPassword("PscX57Q16");
     bool ok = maBase->open();
     if(!ok)
     {
