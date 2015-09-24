@@ -16,11 +16,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-           generationpdf.cpp \
     connexion.cpp
 
 
 
-HEADERS  += generationpdf.h\
+HEADERS  +=\
     connexion.h
 

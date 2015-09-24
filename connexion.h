@@ -3,16 +3,24 @@
 
 #include <QSqlDatabase>
 #include <QSqlTableModel>
+#include <QSqlQuery>
 #include <QObject>
 
 class Connexion
 {
 public:
     Connexion();
-    QVector<QString> getRequest(QString stringRequest, QString tabType);
+    int getNbUser();
+    QString getUserNom(int noUser);
+    QString getUserPrenom(int noUser);
+    QVector<int> getUserTabPointDeVente(int noUser);
+    QString getNomPDV(int noPDV);
+    QVector<int> getProdByPDV(int noPDV);
+    QString getProdName(int noProd);
 
 private :
- QSqlDatabase * maBase;
+    QSqlDatabase * maBase;
+    QSqlQuery req;
 };
 
 #endif // CONNEXION_H

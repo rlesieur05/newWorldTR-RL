@@ -28,9 +28,64 @@ Connexion::Connexion()
     }
 }
 
-QVector<QString> Connexion::getRequest(QString stringRequest, QString tabType)
+int Connexion::getNbUser()
 {
-    QSqlQuery req;
-    req.exec(stringRequest);
-    int nbColonne = tabType.length();
+    req.exec("select * from PointDeVenteParUtilisateur group by idUser");
+    return req.size();
+}
+
+QString Connexion::getUserNom(int noUser)
+{
+    req.exec("select nom from Utilisateur where no = "+ noUser);
+    req.next();
+    return req.value(0).toString();
+}
+
+QString Connexion::getUserPrenom(int noUser)
+{
+    req.exec("select prenom from Utilisateur where no = "+ noUser);
+    req.next();
+    return req.value(0).toString();
+}
+
+QVector<int> Connexion::getUserTabPointDeVente(int noUser)
+{
+    QVector<int> PDVByUser;
+    req.exec("select idPointDeVente from PointDeVenteParUtilisateur where idUser = "+ noUser);
+    while(req.next())
+    {
+        PDVByUser.push_back(req.value(0).toInt());
+    }
+    return PDVByUser;
+}
+
+QString Connexion::getNomPDV(int noPDV)
+{
+    req.exec("select libelle from PointDeVente where no = "+ noPDV);
+    req.next();
+    return req.value(0).toString();
+}
+
+QVector<int> Connexion::getProdByPDV(int noPDV)
+{
+    QVector<int> tabProd;
+    req.exec("select lot from Propose where pointDeVente = "+ noPDV);
+    while(req.next())
+    {
+       int numLot = req.value(0).toInt();
+       QSqlQuery reqLot;
+       reqLot.exec("select produit from Lot where no ="+ numLot);
+       while(reqLot.next())
+       {
+           tabProd.push_back(reqLot.value(0).toInt());
+       }
+    }
+    return tabProd;
+}
+
+QString Connexion::getProdName(int noProd)
+{
+    req.exec("select libelle from Produit where no ="+ noProd);
+    req.next();
+    return req.value(0).toString();
 }
