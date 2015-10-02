@@ -92,11 +92,10 @@ int main(int argc, char *argv[])
         QPainter painter;
         painter.begin(&printer);
         painter.setFont(QFont("Arial",30));
-        painter.drawText(3500,200,"New World");
         painter.setFont(QFont("Arial",15));
-        painter.drawText(0,1000,"Bienvenue sur votre catalogue personnalisé "+ userNom +" "+ userPrenom);
+        painter.drawText(0,1500,"Bienvenue sur votre catalogue personnalisé "+ userNom +" "+ userPrenom);
         painter.setFont(QFont("Arial",12));
-        painter.drawText(0,1500,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
+        painter.drawText(0,2000,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
 
 
 
@@ -104,11 +103,17 @@ int main(int argc, char *argv[])
         monPen.setWidth(50);
         monPen.setColor(Qt::blue);
         painter.setPen(monPen);
-        painter.drawRect(0,0, 1000, 1000);
+        painter.drawRect(0,0, 1000, 1000);*/
 
-        QRectF rectangle(0,0,1000,1000);
+        QRectF rectangle(0,-100,1000,900);
         QImage monImage;
-        painter.drawImage(rectangle, monImage);*/
+        monImage.load("images/logoNw.jpg");
+        painter.drawImage(rectangle, monImage);
+
+        QRectF rectangle2(500,-100,8000,1000);
+        QImage monImage2;
+        monImage2.load("images/ecritureNw.png");
+        painter.drawImage(rectangle2, monImage2);
 
         int decalage = 2000;
 
