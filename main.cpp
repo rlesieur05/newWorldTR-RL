@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
 
 
 
-
     for(int comp=0; comp<nbUser; comp++)
     {
         QString userNom = co.getUserNom(comp);
@@ -65,7 +64,25 @@ int main(int argc, char *argv[])
             int noPDV = numPDV[compPDV];
             nomPDV.push_back(co.getNomPDV(noPDV));
         }
-        QVector< QVector <QString> > nomProduit;
+        QVector<int> numProduit;
+        for(int compPDV=0; compPDV<numPDV.size(); compPDV++)
+        {
+            QVector<int> tabInstNumProd = co.getProdByPDV(numPDV[compPDV]);
+            for(int compProd=0; compProd < tabInstNumProd.size(); compProd++)
+            {
+                bool uniqueNumProd = true;
+                for(int compVerifDoubleProd=0; compVerifDoubleProd < numProduit.size(); compVerifDoubleProd++)
+                {
+                    if(numProduit[compVerifDoubleProd] == tabInstNumProd[compProd])
+                    {
+                        uniqueNumProd = false;
+                    }
+                }
+                if(uniqueNumProd){
+                    numProduit.push_back(tabInstNumProd[compProd]);
+                }
+            }
+        }
 
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
@@ -81,30 +98,13 @@ int main(int argc, char *argv[])
         painter.setFont(QFont("Arial",12));
         painter.drawText(0,1500,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
 
-        for(int compPDV=0; compPDV<numPDV.size(); compPDV++)
-        {
-            QVector <QString> nProd;
-            QVector<int> tabProd = co.getProdByPDV(numPDV[compPDV]);
-            for(int compProd=0; compProd<tabProd.size(); compProd++)
-            {
-                int noProd = tabProd[compProd];
-                nProd.push_back(co.getProdName(noProd));
-            }
-            nomProduit.push_back(nProd);
-        }
-
+        /*QPen monPen;
+        monPen.setWidth(50);
+        monPen.setColor(Qt::blue);
+        painter.setPen(monPen);
+        painter.drawRect(0,0, 1000, 1000);*/
 
         int decalage = 2000;
-        for(int compVPDV=0; compVPDV < numPDV.size(); compVPDV++)
-        {
-            painter.drawText(0, decalage, nomPDV[compVPDV]);
-            decalage += 200;
-            for(int compVProd=0; compVProd < nomProduit[compVPDV].size(); compVProd++)
-            {
-                painter.drawText(1000, decalage, nomProduit[compVPDV][compVProd]);
-                decalage += 200;
-            }
-        }
 
         painter.end();
         cout<<userNom.toStdString()<<" "<<userPrenom.toStdString()<<"("<<comp+1<<"/"<<nbUser<<")"<<endl;
