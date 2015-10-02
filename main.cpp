@@ -102,7 +102,11 @@ int main(int argc, char *argv[])
         monPen.setWidth(50);
         monPen.setColor(Qt::blue);
         painter.setPen(monPen);
-        painter.drawRect(0,0, 1000, 1000);*/
+        painter.drawRect(0,0, 1000, 1000);
+
+        QRectF rectangle(0,0,1000,1000);
+        QImage monImage;
+        painter.drawImage(rectangle, monImage);*/
 
         int decalage = 2000;
 

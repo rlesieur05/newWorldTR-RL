@@ -72,3 +72,30 @@ QString Connexion::getProdName(int noProd)
     req.next();
     return req.value(0).toString();
 }
+
+int Connexion::getRayonByProd(int noProd)
+{
+    req.exec("select categorie from Produit where no ="+ QString::number(noProd));
+    req.next();
+    return req.value(0).toInt();
+}
+
+int Connexion::getCategorieByRayon(int noRayon)
+{
+    req.exec("select rayon from TypeProduit where no ="+ QString::number(noRayon));
+    req.next();
+    return req.value(0).toInt();
+}
+
+/*QVector< QVector < QVector <int> > > Connexion::getMarket(QVector numProduit)
+{
+    QVector categorie;
+    QVector rayon;
+    QVector produit;
+    for(int compProd=0; compProd<numProduit.size(); compProd++)
+    {
+        int rayon;
+        rayon = getRayonByProd(numProduit[comProd]);
+        for
+    }
+}*/

@@ -17,6 +17,8 @@ public:
     QString getNomPDV(int noPDV);
     QVector<int> getProdByPDV(int noPDV);
     QString getProdName(int noProd);
+    int getRayonByProd(int noProd);
+    int getCategorieByRayon(int noRayon);
 
 private :
     QSqlQuery req;
