@@ -27,6 +27,26 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL");
+
+    //maBase=new QSqlDatabase(db);
+
+    db.setHostName("172.16.63.111");
+    db.setDatabaseName("dbtrouxNewWorld");
+    db.setUserName("troux");
+    db.setPassword("PscX57Q16");
+    bool ok = db.open();
+    if(!ok)
+    {
+        cout<<"Connection impossible"<<endl;
+    }
+    else
+    {
+        cout<<"Connection réussie"<<endl;
+    }
+
     Connexion co;
 
     int nbUser = co.getNbUser();
@@ -40,12 +60,12 @@ int main(int argc, char *argv[])
         QString userPrenom = co.getUserPrenom(comp);
         QVector<int> numPDV = co.getUserTabPointDeVente(comp);
         QVector<QString> nomPDV;
-        for(int compPDV=0; compPDV<nomPDV.size(); comp++)
+        for(int compPDV=0; compPDV<numPDV.size(); compPDV++)
         {
             int noPDV = numPDV[compPDV];
             nomPDV.push_back(co.getNomPDV(noPDV));
         }
-        QVector<QString> nomProduit;
+        QVector< QVector <QString> > nomProduit;
 
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
@@ -63,29 +83,31 @@ int main(int argc, char *argv[])
 
         for(int compPDV=0; compPDV<numPDV.size(); compPDV++)
         {
-
-            QVector<int> tabProd = co.getProdByPDV(compPDV);
+            QVector <QString> nProd;
+            QVector<int> tabProd = co.getProdByPDV(numPDV[compPDV]);
             for(int compProd=0; compProd<tabProd.size(); compProd++)
             {
                 int noProd = tabProd[compProd];
-                nomProduit.push_back(co.getProdName(noProd));
+                nProd.push_back(co.getProdName(noProd));
             }
+            nomProduit.push_back(nProd);
         }
 
+
         int decalage = 2000;
-        for(int compVPDV=0; compVPDV<nomPDV.size(); compVPDV++)
+        for(int compVPDV=0; compVPDV < numPDV.size(); compVPDV++)
         {
             painter.drawText(0, decalage, nomPDV[compVPDV]);
             decalage += 200;
-            for(int compVProduit=0; compVProduit<nomProduit.size(); compVProduit++)
+            for(int compVProd=0; compVProd < nomProduit[compVPDV].size(); compVProd++)
             {
-                painter.drawText(1000, decalage, nomProduit[compVProduit]);
+                painter.drawText(1000, decalage, nomProduit[compVPDV][compVProd]);
                 decalage += 200;
             }
         }
 
         painter.end();
-        cout<<endl;
+        cout<<userNom.toStdString()<<" "<<userPrenom.toStdString()<<"("<<comp+1<<"/"<<nbUser<<")"<<endl;
     }
 
 

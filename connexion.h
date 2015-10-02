@@ -19,7 +19,6 @@ public:
     QString getProdName(int noProd);
 
 private :
-    QSqlDatabase * maBase;
     QSqlQuery req;
 };
 
