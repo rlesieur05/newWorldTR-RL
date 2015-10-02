@@ -87,15 +87,65 @@ int Connexion::getCategorieByRayon(int noRayon)
     return req.value(0).toInt();
 }
 
-/*QVector< QVector < QVector <int> > > Connexion::getMarket(QVector numProduit)
+QVector<int> Connexion::getTabRayon(QVector<int> numProduit)
 {
-    QVector categorie;
-    QVector rayon;
-    QVector produit;
-    for(int compProd=0; compProd<numProduit.size(); compProd++)
+    QVector<int> numRayon;
+    for(int comp=0; comp<numProduit.size(); comp++)
     {
-        int rayon;
-        rayon = getRayonByProd(numProduit[comProd]);
-        for
+        int rayon = getRayonByProd(numProduit[comp]);
+        bool uniqueR = true;
+        for(int compR=0; compR<numRayon.size(); compR++)
+        {
+            if(numRayon[compR] == rayon){
+                uniqueR = false;
+            }
+        }
+        if(uniqueR){
+            numRayon.push_back(rayon);
+        }
     }
-}*/
+    return numRayon;
+}
+
+QVector<int> Connexion::getTabCategorie(QVector<int> numRayon)
+{
+    QVector<int> numCategorie;
+    for(int comp=0; comp<numRayon.size(); comp++)
+    {
+        int categorie = getCategorieByRayon(numRayon[comp]);
+        bool uniqueC = true;
+        for(int compC=0; compC<numCategorie.size(); compC++)
+        {
+            if(numCategorie[compC] == categorie){
+                uniqueC = false;
+            }
+        }
+        if(uniqueC){
+            numCategorie.push_back(categorie);
+        }
+    }
+    return numCategorie;
+}
+
+QVector< QVector < QVector<int> > > Connexion::getMarket(QVector<int> numProduit)
+{
+    QVector<int> numRayon = getTabRayon(numProduit);
+    QVector<int> numCategorie = getTabCategorie(numRayon);
+
+    QVector< QVector < QVector<int> > > marketC;
+    for(int compC=0; compC<numCategorie.size(); compC++)
+    {
+        QVector< QVector<int> > marketR;
+        for(int compR=0; compR<numRayon.size(); compR++)
+        {
+            QVector<int> marketP;
+            for(int compP=0; compP<numProduit.size(); compP++)
+            {
+                marketP.push_back(numProduit[compP]);
+            }
+            marketR.push_back(marketP);
+        }
+        marketC.push_back(marketR);
+    }
+    return marketC;
+}
