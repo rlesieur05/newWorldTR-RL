@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
         printer.setOutputFormat(QPrinter::NativeFormat);
-        printer.setOutputFileName("/home/troux/Documents/ppe/groupPdf/"+ QString::number(comp) +".pdf");
+        printer.setOutputFileName("/tmp/"+ QString::number(comp) +".pdf");
 
         QPainter painter;
         painter.begin(&printer);
@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
         painter.drawText(0,1000,"Bienvenue sur votre catalogue personnalisé "+ userNom +" "+ userPrenom);
         painter.setFont(QFont("Arial",12));
         painter.drawText(0,1500,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
+
+
 
         /*QPen monPen;
         monPen.setWidth(50);
