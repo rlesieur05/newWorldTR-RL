@@ -127,11 +127,8 @@ QVector<int> Connexion::getTabCategorie(QVector<int> numRayon)
     return numCategorie;
 }
 
-QVector< QVector < QVector<int> > > Connexion::getMarket(QVector<int> numProduit)
+QVector< QVector < QVector<int> > > Connexion::getMarket(QVector<int> numProduit, QVector<int> numRayon, QVector<int> numCategorie)
 {
-    QVector<int> numRayon = getTabRayon(numProduit);
-    QVector<int> numCategorie = getTabCategorie(numRayon);
-
     QVector< QVector < QVector<int> > > marketC;
     for(int compC=0; compC<numCategorie.size(); compC++)
     {
@@ -141,11 +138,8 @@ QVector< QVector < QVector<int> > > Connexion::getMarket(QVector<int> numProduit
             QVector<int> marketP;
             for(int compP=0; compP<numProduit.size(); compP++)
             {
-                marketP.push_back(numProduit[compP]);
             }
-            marketR.push_back(marketP);
         }
-        marketC.push_back(marketR);
     }
     return marketC;
 }

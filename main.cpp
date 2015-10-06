@@ -1,3 +1,4 @@
+
 /**
  * @author Robin Lesieur
  * @date 11/08/2015
@@ -84,6 +85,10 @@ int main(int argc, char *argv[])
             }
         }
 
+        QVector<int> numRayon = co.getTabRayon(numProduit);
+        QVector<int> numCategorie = co.getTabCategorie(numRayon);
+        QVector< QVector < QVector<int> > > market = co.getMarket(numProduit, numRayon, numCategorie);
+
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
         printer.setOutputFormat(QPrinter::NativeFormat);
@@ -97,7 +102,19 @@ int main(int argc, char *argv[])
         painter.setFont(QFont("Arial",12));
         painter.drawText(0,2000,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
 
-
+        int decalage = 2500;
+        /*for(int compC=0; compC<market.size(); compC++)
+        {
+            for(int compR=0; compR<market[compC].size(); compR++)
+            {
+                for(int compP=0; compP<market[compC][compR].size(); compP++)
+                {
+                    cout<<market[compC][compR][compP]<<endl;
+                    painter.drawText(0,decalage, co.getProdName(market[compC][compR][compP]));
+                    decalage += 200;
+                }
+            }
+        }*/
 
         /*QPen monPen;
         monPen.setWidth(50);
@@ -114,8 +131,6 @@ int main(int argc, char *argv[])
         QImage monImage2;
         monImage2.load("images/ecritureNw.png");
         painter.drawImage(rectangle2, monImage2);
-
-        int decalage = 2000;
 
         painter.end();
         cout<<userNom.toStdString()<<" "<<userPrenom.toStdString()<<"("<<comp+1<<"/"<<nbUser<<")"<<endl;

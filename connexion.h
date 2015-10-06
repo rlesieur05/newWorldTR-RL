@@ -21,7 +21,7 @@ public:
     int getCategorieByRayon(int noRayon);
     QVector<int> getTabRayon(QVector<int> numProduit);
     QVector<int> getTabCategorie(QVector<int> numRayon);
-    QVector< QVector < QVector<int> > > getMarket(QVector<int> numProduit);
+    QVector< QVector < QVector<int> > > getMarket(QVector<int> numProduit, QVector<int> numRayon, QVector<int> numCategorie);
 
 private :
     QSqlQuery req;
