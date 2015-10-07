@@ -145,30 +145,3 @@ QString Connexion::getCategorieName(int idCategorie)
     return req.value(0).toString();
 }
 
-QVector< QVector < QVector<int> > > Connexion::getMarket(QVector<int> numProduit, QVector<int> numRayon, QVector<int> numCategorie)
-{
-    QVector< QVector < QVector<int> > > marketC;
-    foreach(const int &idCategorie, numCategorie)
-    {
-        QVector< QVector<int> > marketR;
-        foreach(const int &idRayon, numRayon)
-        {
-            QVector<int> marketP;
-            foreach(const int &idProduit, numProduit)
-            {
-                if(idRayon == getRayonByProd(idProduit))
-                {
-                    marketP.push_back(idProduit);
-                }
-            }
-            if(idCategorie == getCategorieByRayon(idRayon))
-            {
-                marketR.push_back(marketP);
-            }
-        }
-        marketC.push_back(marketR);
-    }
-    cout<<endl;
-
-    return marketC;
-}

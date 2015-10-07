@@ -80,24 +80,6 @@ int main(int argc, char *argv[])
         }
         QVector<int> numRayon = co.getTabRayon(numProduit);
         QVector<int> numCategorie = co.getTabCategorie(numRayon);
-        QVector< QVector < QVector<int> > > market = co.getMarket(numProduit, numRayon, numCategorie);//produit par rayon par catégorie (tableau[C][R][P])
-
-        /*for(int test=0; test<numProduit.size(); test++)
-        {
-            cout<<numProduit[test]<<" ";
-        }
-        cout<<endl;
-        for(int compC=0; compC<market.size(); compC++)
-        {
-            for(int compR=0; compR<market[compC].size(); compR++)
-            {
-                for(int compP=0; compP<market[compC][compR].size(); compP++)
-                {
-                    cout<<market[compC][compR][compP]<<" ";
-                }
-            }
-        }
-        cout<<endl;*/
 
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
@@ -113,18 +95,25 @@ int main(int argc, char *argv[])
         painter.drawText(0,2000,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
 
         int decalage = 2500;
-        /*for(int compC=0; compC<market.size(); compC++)
+        foreach(const int &idCategorie, numCategorie)
         {
-            for(int compR=0; compR<market[compC].size(); compR++)
+            painter.drawText(0,decalage, co.getCategorieName(idCategorie));
+            decalage += 200;
+            foreach(const int &idRayon, numRayon)
             {
-                for(int compP=0; compP<market[compC][compR].size(); compP++)
-                {
-                    cout<<market[compC][compR][compP]<<endl;
-                    painter.drawText(0,decalage, co.getProdName(market[compC][compR][compP]));
+                if(co.getCategorieByRayon(idRayon) == idCategorie){
+                    painter.drawText(2000,decalage, co.getRayonName(idRayon));
                     decalage += 200;
                 }
+                foreach(const int &idProduit, numProduit)
+                {
+                    if( (co.getRayonByProd(idProduit) == idRayon) && (co.getCategorieByRayon(idRayon) == idCategorie) ){
+                        painter.drawText(4000, decalage, co.getProdName(idProduit));
+                        decalage += 200;
+                    }
+                }
             }
-        }*/
+        }
 
         /*QPen monPen;
         monPen.setWidth(50);
@@ -143,7 +132,7 @@ int main(int argc, char *argv[])
         painter.drawImage(rectangle2, monImage2);
 
         painter.end();
-        cout<<userNom.toStdString()<<" "<<userPrenom.toStdString()<<"("<<comp+1<<"/"<<nbUser<<")"<<endl;
+        cout<<userNom.toStdString()<<" "<<userPrenom.toStdString()<<" ("<<comp+1<<"/"<<nbUser<<")"<<endl;
     }
 
 

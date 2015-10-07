@@ -23,7 +23,6 @@ public:
     QString getRayonName(int idRayon);
     QVector<int> getTabCategorie(QVector<int> numRayon);
     QString getCategorieName(int idCategorie);
-    QVector< QVector < QVector<int> > > getMarket(QVector<int> numProduit, QVector<int> numRayon, QVector<int> numCategorie);
 
 
 private :
