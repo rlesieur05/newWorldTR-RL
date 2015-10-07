@@ -49,22 +49,16 @@ int main(int argc, char *argv[])
     }
 
     Connexion co;
-
-    int nbUser = co.getNbUser();
+    QVector<int> idUser = co.getTabIdUser();
+    int nbUser = idUser.size();
 
 
 
     for(int comp=0; comp<nbUser; comp++)
     {
-        QString userNom = co.getUserNom(comp);
-        QString userPrenom = co.getUserPrenom(comp);
-        QVector<int> numPDV = co.getUserTabPointDeVente(comp);
-        QVector<QString> nomPDV;
-        for(int compPDV=0; compPDV<numPDV.size(); compPDV++)
-        {
-            int noPDV = numPDV[compPDV];
-            nomPDV.push_back(co.getNomPDV(noPDV));
-        }
+        QString userNom = co.getUserNom(idUser[comp]);
+        QString userPrenom = co.getUserPrenom(idUser[comp]);
+        QVector<int> numPDV = co.getUserTabPointDeVente(idUser[comp]);
         QVector<int> numProduit;
         for(int compPDV=0; compPDV<numPDV.size(); compPDV++)
         {
@@ -84,15 +78,31 @@ int main(int argc, char *argv[])
                 }
             }
         }
-
         QVector<int> numRayon = co.getTabRayon(numProduit);
         QVector<int> numCategorie = co.getTabCategorie(numRayon);
-        QVector< QVector < QVector<int> > > market = co.getMarket(numProduit, numRayon, numCategorie);
+        QVector< QVector < QVector<int> > > market = co.getMarket(numProduit, numRayon, numCategorie);//produit par rayon par catégorie (tableau[C][R][P])
+
+        /*for(int test=0; test<numProduit.size(); test++)
+        {
+            cout<<numProduit[test]<<" ";
+        }
+        cout<<endl;
+        for(int compC=0; compC<market.size(); compC++)
+        {
+            for(int compR=0; compR<market[compC].size(); compR++)
+            {
+                for(int compP=0; compP<market[compC][compR].size(); compP++)
+                {
+                    cout<<market[compC][compR][compP]<<" ";
+                }
+            }
+        }
+        cout<<endl;*/
 
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
         printer.setOutputFormat(QPrinter::NativeFormat);
-        printer.setOutputFileName("/tmp/"+ QString::number(comp) +".pdf");
+        printer.setOutputFileName("/home/troux/sources-build-desktop-Qt_4_8_2_in_PATH__System__Debug/"+ QString::number(idUser[comp]) +".pdf");
 
         QPainter painter;
         painter.begin(&printer);

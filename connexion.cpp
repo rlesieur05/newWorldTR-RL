@@ -11,10 +11,14 @@ Connexion::Connexion()
 {
 }
 
-int Connexion::getNbUser()
+QVector<int> Connexion::getTabIdUser()
 {
-    req.exec("select * from PointDeVenteParUtilisateur group by idUser");
-    return req.size();
+    QVector<int> idUser;
+    req.exec("select idUser from PointDeVenteParUtilisateur group by idUser");
+    while(req.next()){
+        idUser.push_back(req.value(0).toInt());
+    }
+    return idUser;
 }
 
 QString Connexion::getUserNom(int noUser)
@@ -107,6 +111,13 @@ QVector<int> Connexion::getTabRayon(QVector<int> numProduit)
     return numRayon;
 }
 
+QString Connexion::getRayonName(int idRayon)
+{
+    req.exec("select libelle from TypeProduit where no ="+ QString::number(idRayon));
+    req.next();
+    return req.value(0).toString();
+}
+
 QVector<int> Connexion::getTabCategorie(QVector<int> numRayon)
 {
     QVector<int> numCategorie;
@@ -127,19 +138,37 @@ QVector<int> Connexion::getTabCategorie(QVector<int> numRayon)
     return numCategorie;
 }
 
+QString Connexion::getCategorieName(int idCategorie)
+{
+    req.exec("select libelle from SurType where no ="+ QString::number(idCategorie));
+    req.next();
+    return req.value(0).toString();
+}
+
 QVector< QVector < QVector<int> > > Connexion::getMarket(QVector<int> numProduit, QVector<int> numRayon, QVector<int> numCategorie)
 {
     QVector< QVector < QVector<int> > > marketC;
-    for(int compC=0; compC<numCategorie.size(); compC++)
+    foreach(const int &idCategorie, numCategorie)
     {
         QVector< QVector<int> > marketR;
-        for(int compR=0; compR<numRayon.size(); compR++)
+        foreach(const int &idRayon, numRayon)
         {
             QVector<int> marketP;
-            for(int compP=0; compP<numProduit.size(); compP++)
+            foreach(const int &idProduit, numProduit)
             {
+                if(idRayon == getRayonByProd(idProduit))
+                {
+                    marketP.push_back(idProduit);
+                }
+            }
+            if(idCategorie == getCategorieByRayon(idRayon))
+            {
+                marketR.push_back(marketP);
             }
         }
+        marketC.push_back(marketR);
     }
+    cout<<endl;
+
     return marketC;
 }
