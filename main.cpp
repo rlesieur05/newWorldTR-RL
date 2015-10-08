@@ -84,32 +84,67 @@ int main(int argc, char *argv[])
         QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
         printer.setFullPage(QPrinter::A4);
         printer.setOutputFormat(QPrinter::NativeFormat);
-        printer.setOutputFileName("/home/troux/sources-build-desktop-Qt_4_8_2_in_PATH__System__Debug/"+ QString::number(idUser[comp]) +".pdf");
+        printer.setOutputFileName("pdfClient/"+ QString::number(idUser[comp]) +".pdf");
 
+
+        int decalage = -100;
+        int tailleImage = 2300;
         QPainter painter;
         painter.begin(&printer);
-        painter.setFont(QFont("Arial",30));
+        QRectF rectangle(700, decalage,1000,900);
+        QImage monImage;
+        monImage.load("images/presentation/logoNw.jpg");
+        painter.drawImage(rectangle, monImage);
+        QRectF rectangle2(1200, decalage,8000,1000);
+        QImage monImage2;
+        monImage2.load("images/presentation/ecritureNw.png");
+        painter.drawImage(rectangle2, monImage2);
+        decalage += 2000;
         painter.setFont(QFont("Arial",15));
-        painter.drawText(0,1500,"Bienvenue sur votre catalogue personnalisé "+ userNom +" "+ userPrenom);
+        painter.drawText(0, decalage, userNom +" "+ userPrenom +",");
+        decalage += 250;
+        painter.drawText(0, decalage,"Bienvenue sur votre catalogue personnalisé ");
+        decalage += 1000;
         painter.setFont(QFont("Arial",12));
-        painter.drawText(0,2000,"Nous vous invitons dès à présent à regarder les produits disponibles dans le(s) lieu(x) suivant(s):");
+        painter.drawText(0, decalage,"Nous vous proposerons cette semaine "+QString::number(numProduit.size()) +" produits parmi les "+ QString::number(numPDV.size()) +" points de vente choisis.");
+        decalage += 650;
 
-        int decalage = 2500;
         foreach(const int &idCategorie, numCategorie)
         {
-            painter.drawText(0,decalage, co.getCategorieName(idCategorie));
+            painter.drawText(0, decalage, co.getCategorieName(idCategorie));
             decalage += 200;
             foreach(const int &idRayon, numRayon)
             {
-                if(co.getCategorieByRayon(idRayon) == idCategorie){
-                    painter.drawText(2000,decalage, co.getRayonName(idRayon));
-                    decalage += 200;
-                }
-                foreach(const int &idProduit, numProduit)
+                if(co.getCategorieByRayon(idRayon) == idCategorie)
                 {
-                    if( (co.getRayonByProd(idProduit) == idRayon) && (co.getCategorieByRayon(idRayon) == idCategorie) ){
-                        painter.drawText(4000, decalage, co.getProdName(idProduit));
-                        decalage += 200;
+                    painter.drawText(500,decalage, co.getRayonName(idRayon));
+                    decalage += 200;
+                    int decalageV = 1000;
+                    foreach(const int &idProduit, numProduit)
+                    {
+                        if(co.getRayonByProd(idProduit) == idRayon)
+                        {
+                            QRectF rectangle(decalageV, decalage-100, tailleImage, tailleImage);
+                            QImage monImage;
+                            monImage.load("images/produit/"+ QString::number(idProduit) +".png");
+                            painter.drawImage(rectangle, monImage);
+                            QPen pen;
+                            pen.setColor(Qt::magenta);
+                            painter.setPen(pen);
+                            painter.setFont(QFont("Arial",10));
+                            painter.drawText(decalageV+500, decalage+tailleImage+100, co.getProdName(idProduit));
+                            pen.setColor(Qt::black);
+                            painter.setPen(pen);
+                            painter.setFont(QFont("Arial",12));
+
+                            decalageV += tailleImage+500;
+
+                        }
+                    }
+                    decalage += tailleImage+500;
+                    if(decalage > 11000){
+                        printer.newPage();
+                        decalage = 0;
                     }
                 }
             }
@@ -121,15 +156,7 @@ int main(int argc, char *argv[])
         painter.setPen(monPen);
         painter.drawRect(0,0, 1000, 1000);*/
 
-        QRectF rectangle(0,-100,1000,900);
-        QImage monImage;
-        monImage.load("images/logoNw.jpg");
-        painter.drawImage(rectangle, monImage);
 
-        QRectF rectangle2(500,-100,8000,1000);
-        QImage monImage2;
-        monImage2.load("images/ecritureNw.png");
-        painter.drawImage(rectangle2, monImage2);
 
         painter.end();
         cout<<userNom.toStdString()<<" "<<userPrenom.toStdString()<<" ("<<comp+1<<"/"<<nbUser<<")"<<endl;
