@@ -23,6 +23,10 @@ public:
     QString getRayonName(int idRayon);
     QVector<int> getTabCategorie(QVector<int> numRayon);
     QString getCategorieName(int idCategorie);
+    float getPriceByIdProd(int idProd);
+    QString getUniteByIdProd(int idProd);
+    int getQteRestanteByIdProd(int idProd);
+    QVector<int> getTabPDVByIdProd(QVector<int> tabPDV, int idProd);
 
 
 private :

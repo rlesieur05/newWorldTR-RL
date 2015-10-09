@@ -145,3 +145,52 @@ QString Connexion::getCategorieName(int idCategorie)
     return req.value(0).toString();
 }
 
+float Connexion::getPriceByIdProd(int idProd)
+{
+    req.exec("select prixUnitaire from Lot where produit ="+ QString::number(idProd));
+    req.next();
+    return req.value(0).toFloat();
+}
+
+QString Connexion::getUniteByIdProd(int idProd)
+{
+    req.exec("select unite from Lot where produit ="+ QString::number(idProd));
+    req.next();
+    QString idUnite = req.value(0).toString();
+    req.exec("select uniteLib from Unite where no ="+ idUnite);
+    req.next();
+    return req.value(0).toString();
+}
+
+int Connexion::getQteRestanteByIdProd(int idProd)
+{
+    req.exec("select qte from Lot where produit ="+ QString::number(idProd));
+    req.next();
+    return req.value(0).toInt();
+}
+
+QVector<int> Connexion::getTabPDVByIdProd(QVector<int> tabPDV, int idProd)
+{
+    QVector<int> instPDV;
+    foreach(const int &idPDV, tabPDV)
+    {
+        QVector<int> tabProduitAssocie = getProdByPDV(idPDV);
+        foreach(const int &associateProd, tabProduitAssocie)
+        {
+            if(associateProd == idProd)
+            {
+                bool unique = true;
+                foreach(const int &noPDV, instPDV)
+                {
+                    if(idPDV == noPDV){
+                        unique = false;
+                    }
+                }
+                if(unique){
+                    instPDV.push_back(idPDV);
+                }
+            }
+        }
+    }
+    return instPDV;
+}

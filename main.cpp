@@ -87,8 +87,9 @@ int main(int argc, char *argv[])
         printer.setOutputFileName("pdfClient/"+ QString::number(idUser[comp]) +".pdf");
 
 
+        QPen pen;
         int decalage = -100;
-        int tailleImage = 2300;
+        int tailleImage = 1800;
         QPainter painter;
         painter.begin(&printer);
         QRectF rectangle(700, decalage,1000,900);
@@ -104,6 +105,19 @@ int main(int argc, char *argv[])
         painter.drawText(0, decalage, userNom +" "+ userPrenom +",");
         decalage += 250;
         painter.drawText(0, decalage,"Bienvenue sur votre catalogue personnalisé ");
+        decalage += 400;
+        painter.setFont(QFont("Arial",9));
+        painter.drawText(0, decalage, "Liste des points de vente associés :");
+        decalage += 200;
+        pen.setWidth(10);
+        painter.setPen(pen);
+        for(int compNbPDV=0; compNbPDV<numPDV.size(); compNbPDV++)
+        {
+            painter.drawRect(0, decalage, 3000, 300);
+            painter.drawText(100, decalage+200, QString::number(compNbPDV+1)+ " : " +co.getNomPDV(numPDV[compNbPDV]));
+            painter.drawText(2000, decalage+200, QString::number(co.getProdByPDV(numPDV[compNbPDV]).size())+ " Produits");
+            decalage += 300;
+        }
         decalage += 1000;
         painter.setFont(QFont("Arial",12));
         painter.drawText(0, decalage,"Nous vous proposerons cette semaine "+QString::number(numProduit.size()) +" produits parmi les "+ QString::number(numPDV.size()) +" points de vente choisis.");
@@ -128,21 +142,34 @@ int main(int argc, char *argv[])
                             QImage monImage;
                             monImage.load("images/produit/"+ QString::number(idProduit) +".png");
                             painter.drawImage(rectangle, monImage);
-                            QPen pen;
                             pen.setColor(Qt::magenta);
                             painter.setPen(pen);
                             painter.setFont(QFont("Arial",10));
-                            painter.drawText(decalageV+500, decalage+tailleImage+100, co.getProdName(idProduit));
+                            painter.drawText(decalageV, decalage+tailleImage+100, co.getProdName(idProduit) +" "+ QString::number(co.getPriceByIdProd(idProduit)) +" € par "+ co.getUniteByIdProd(idProduit));
+                            QColor color;
+                            color.setNamedColor("#04B404");
+                            pen.setColor(color);
+                            painter.setPen(pen);
+                            painter.drawText(decalageV, decalage+tailleImage+300, "Restant : "+ QString::number(co.getQteRestanteByIdProd(idProduit)));
+                            QVector<int> tabAssociatePDV = co.getTabPDVByIdProd(numPDV, idProduit);
+                            QString letterPDV = "| ";
+                            for(int compNoAPDV=0; compNoAPDV<tabAssociatePDV.size(); compNoAPDV++)
+                            {
+                                letterPDV += QString::number(compNoAPDV+1)+" | ";
+                            }
+                            pen.setColor(Qt::blue);
+                            painter.setPen(pen);
+                            painter.drawText(decalageV, decalage+tailleImage+500, "Disponible à : "+ letterPDV);
                             pen.setColor(Qt::black);
                             painter.setPen(pen);
                             painter.setFont(QFont("Arial",12));
 
-                            decalageV += tailleImage+500;
+                            decalageV += tailleImage+300;
 
                         }
                     }
-                    decalage += tailleImage+500;
-                    if(decalage > 11000){
+                    decalage += tailleImage+900;
+                    if(decalage > 10500){
                         printer.newPage();
                         decalage = 0;
                     }
