@@ -132,12 +132,13 @@ int main(int argc, char *argv[])
                 if(co.getCategorieByRayon(idRayon) == idCategorie)
                 {
                     painter.drawText(500,decalage, co.getRayonName(idRayon));
-                    decalage += 200;
+                    decalage += 500;
                     int decalageV = 1000;
                     foreach(const int &idProduit, numProduit)
                     {
                         if(co.getRayonByProd(idProduit) == idRayon)
                         {
+                            painter.drawText(decalageV, decalage-300, co.getProdName(idProduit));
                             QRectF rectangle(decalageV, decalage-100, tailleImage, tailleImage);
                             QImage monImage;
                             monImage.load("images/produit/"+ QString::number(idProduit) +".png");
@@ -145,7 +146,7 @@ int main(int argc, char *argv[])
                             pen.setColor(Qt::magenta);
                             painter.setPen(pen);
                             painter.setFont(QFont("Arial",10));
-                            painter.drawText(decalageV, decalage+tailleImage+100, co.getProdName(idProduit) +" "+ QString::number(co.getPriceByIdProd(idProduit)) +" € par "+ co.getUniteByIdProd(idProduit));
+                            painter.drawText(decalageV, decalage+tailleImage+100, QString::number(co.getPriceByIdProd(idProduit)) +" € par "+ co.getUniteByIdProd(idProduit));
                             QColor color;
                             color.setNamedColor("#04B404");
                             pen.setColor(color);
